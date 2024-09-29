@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            width: 60%;
+            margin: 0 auto;
+        }
+        .upload-section {
+            margin-top: 30px;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 20px auto;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result-section {
+            margin-top: 40px;
+        }
+        .result-section img {
+            max-width: 100%;
+            height: auto;
+        }
+        .prediction {
+            font-size: 1.5em;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an Image for Classification</h1>
+        <div class="upload-section">
+            <form action="{{ url_for('predict') }}" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <button type="submit">Classify Image</button>
+            </form>
+        </div>
+        
+        {% if prediction %}
+        <div class="result-section">
+            <h2>Classification Result</h2>
+            <p class="prediction">Predicted Label: <strong>{{ prediction }}</strong></p>
+            <h3>Uploaded Image:</h3>
+            <img src="{{ url_for('static', filename='uploads/' + img_path.split('/')[-1]) }}" alt="Uploaded Image">
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
